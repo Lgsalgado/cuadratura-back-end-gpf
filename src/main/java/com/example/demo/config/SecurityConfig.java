@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers("/api/login").permitAll();
                     http.requestMatchers("/api/reinject").permitAll();
-                    //http.requestMatchers("/api/servidor").permitAll();
+                    http.requestMatchers("/api/searchOrdersError").permitAll();
                     http.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(oauth -> {

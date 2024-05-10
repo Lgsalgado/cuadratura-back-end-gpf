@@ -11,8 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
-
-
+import java.util.Map;
 
 
 @RestController
@@ -31,11 +30,15 @@ public class MicroservicioController {
     }
 
     @PostMapping("/searchOrdersError")
-    public String buscarOrdenesError(@RequestParam   String fechaInicio
-                                           //@RequestBody  String fechaFin
-                                           ) {
-        System.out.println("Ingreso aqui a buscar");
-        return "microservicioService.cuadratura();";}
+    public String buscarOrdenesError(@RequestBody Map<String, String> request) {
+        System.out.println("Ingresó a buscar");
+        String fechaInicio = request.get("startDate");
+        String fechaFin = request.get("endDate");
+        // Llamar a la función correspondiente del servicio para buscar órdenes con error
+        // Aquí deberías llamar a la función de tu servicio que realiza la búsqueda de órdenes con error
+        // Pasar las fechas de inicio y fin a esa función
+        return microservicioService.buscarOrdenRangoTiempo(fechaInicio, fechaFin);
+    }
     @GetMapping("/hello-1")
     @PreAuthorize("hasRole('admin_client_role')")
     public String helloAdmin(){

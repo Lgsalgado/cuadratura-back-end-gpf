@@ -148,6 +148,36 @@ public class MicroservicioService {
 
         return idPrcinstance;
     }
-    //
+    //Buscar ordenes por rango de fecha
+    public String buscarOrdenRangoTiempo(String fechaInicio, String fechaFin) {
+        // Configura el encabezado con el token
+        UserDTO userDTO= loginFacturador();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Auth", userDTO.getToken());
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // Configura el JSON de la solicitud
+        String jsonRequest = "{\n" +
+                "    \"status\": \"\",\n" +
+                "    \"startDate\": \""+fechaInicio+"\",\n" +
+                "    \"endDate\": \""+fechaFin+"\",\n" +
+                "    \"store\": 4,\n" +
+                "    \"ordenCompra\": \"\",\n" +
+                "    \"typeOrder\": \"\"\n" +
+                "}";
+
+        // Crea la entidad de la solicitud con el encabezado y el cuerpo JSON
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonRequest, headers);
+
+        // Realiza la llamada al servicio externo
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "https://facturadorbackend.socoomni.com:8080/MTDServices/errorsweb",
+                HttpMethod.POST,
+                requestEntity,
+                String.class
+        );
+
+        // Extrae y devuelve la respuesta del servicio externo
+        return responseEntity.getBody();
+    }
 
 }
